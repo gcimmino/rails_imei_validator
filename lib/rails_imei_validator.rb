@@ -12,6 +12,6 @@ class ImeiValidator < ActiveModel::EachValidator
   end
 
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, :invalid) unless valid(imei)
+    record.errors.add(attribute, :invalid) unless valid(value)
   end
 end
