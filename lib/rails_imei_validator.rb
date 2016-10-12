@@ -1,7 +1,6 @@
-require "rails_imei_validator/version"
 require 'active_model'
 
-class RailsImeiValidator
+class ImeiValidator < ActiveModel::EachValidator
   def valid(imei)
       return false if imei.blank?
       digits = imei.reverse.chars.map(&:to_i)
@@ -9,10 +8,10 @@ class RailsImeiValidator
         digit *= 2 if i.odd?
         digit -= 9 if digit > 9
         sum += digit
-      end
+      end % 10 == 0
   end
 
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, :invalid) unless valid(imei)
+    record.errors.add(attribute, :invalid) unless valid(value)
   end
 end
