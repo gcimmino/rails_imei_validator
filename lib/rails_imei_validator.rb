@@ -1,4 +1,3 @@
-require "rails_imei_validator/version"
 require 'active_model'
 
 class RailsImeiValidator
