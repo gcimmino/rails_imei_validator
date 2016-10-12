@@ -8,7 +8,7 @@ class ImeiValidator < ActiveModel::EachValidator
         digit *= 2 if i.odd?
         digit -= 9 if digit > 9
         sum += digit
-      end
+      end % 10 == 0
   end
 
   def validate_each(record, attribute, value)
