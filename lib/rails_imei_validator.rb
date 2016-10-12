@@ -1,6 +1,6 @@
 require 'active_model'
 
-class RailsImeiValidator
+class ImeiValidator < ActiveModel::EachValidator
   def valid(imei)
       return false if imei.blank?
       digits = imei.reverse.chars.map(&:to_i)
