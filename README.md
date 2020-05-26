@@ -1,3 +1,4 @@
+![Ruby](https://github.com/gcimmino/rails_imei_validator/workflows/Ruby/badge.svg?branch=master)
 # RailsImeiValidator
 
 Imei (International Mobile Equipment Identity) is based on Luhn algorithm. This gem is a simple active model validator for imei.
