@@ -1,48 +1,53 @@
 require 'test_helper'
 
-describe RailsImeiValidator do
+class ValidateDefaultImei
+  include ActiveModel::Validations
+  attr_accessor :imei
+
+  validates :imei, imei: true
+end
+
+describe 'RailsImeiValidator' do
+  attr_reader :object
   let(:good_imei) { '990000862471853' }
   let(:bad_imei)  { '990000862471850' }
   let(:error_msg) { 'Imei is invalid' }
 
-  before do
-    class ValidateImei
-      include ActiveModel::Validations
-      attr_accessor :imei
-    end
-  end
+  subject { ValidateDefaultImei.new }
 
   describe 'default imei validation' do
-    before do
-      class ValidateDefaultImei < ValidateImei
-        validates :imei, imei: true
-      end
-      @object = ValidateDefaultImei.new
-    end
-
     describe 'when imei is missing' do
+      before do
+        subject.imei = ''
+      end
+
       it 'is invalid' do
-        @object.imei = ''
-        @object.wont_be :valid?
-        @object.errors.wont_be_empty
-        @object.errors.full_messages.must_include error_msg
+        _(subject).wont_be :valid?
+        _(subject.errors).wont_be_empty
+        _(subject.errors.full_messages).must_include error_msg
       end
     end
 
     describe 'when imei is good' do
+      before do
+        subject.imei = good_imei
+      end
+
       it 'is valid' do
-        @object.imei = good_imei
-        @object.must_be :valid?
-        @object.errors.must_be_empty
+        _(subject).must_be :valid?
+        _(subject.errors).must_be_empty
       end
     end
 
     describe 'when imei is bad' do
+      before do
+        subject.imei = bad_imei
+      end
+
       it 'is invalid' do
-        @object.imei = bad_imei
-        @object.wont_be :valid?
-        @object.errors.wont_be_empty
-        @object.errors.full_messages.must_include error_msg
+        _(subject).wont_be :valid?
+        _(subject.errors).wont_be_empty
+        _(subject.errors.full_messages).must_include error_msg
       end
     end
   end
